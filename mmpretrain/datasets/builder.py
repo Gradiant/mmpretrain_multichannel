@@ -1,5 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 from mmpretrain.registry import DATASETS
+from mmpretrain.registry import PIPELINES
 
 
 def build_dataset(cfg):
@@ -23,3 +24,14 @@ def build_dataset(cfg):
             Prefix of data:     data/mnist/
     """
     return DATASETS.build(cfg)
+
+def build_pipeline(cfg):
+    """Build pipeline.
+    
+    Args:
+        cfg (dict): Configuration dictionary.
+
+    Returns:
+        pipeline: Constructed pipeline.
+    """
+    return PIPELINES.build(cfg)

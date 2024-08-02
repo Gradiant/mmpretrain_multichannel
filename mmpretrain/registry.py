@@ -36,7 +36,7 @@ __all__ = [
     'OPTIMIZERS', 'OPTIM_WRAPPERS', 'OPTIM_WRAPPER_CONSTRUCTORS',
     'PARAM_SCHEDULERS', 'DATASETS', 'DATA_SAMPLERS', 'TRANSFORMS', 'MODELS',
     'MODEL_WRAPPERS', 'WEIGHT_INITIALIZERS', 'BATCH_AUGMENTS', 'TASK_UTILS',
-    'METRICS', 'EVALUATORS', 'VISUALIZERS', 'VISBACKENDS'
+    'METRICS', 'EVALUATORS', 'VISUALIZERS', 'VISBACKENDS', 'PIPELINES'
 ]
 
 #######################################################################
@@ -193,3 +193,6 @@ VISBACKENDS = Registry(
     parent=MMENGINE_VISBACKENDS,
     locations=['mmpretrain.visualization'],
 )
+
+# PIPELINES registration
+PIPELINES = Registry('pipeline')
