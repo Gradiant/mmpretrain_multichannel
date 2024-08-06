@@ -31,7 +31,8 @@ __all__ = [
     'DTD', 'FGVCAircraft', 'FashionMNIST', 'Flowers102', 'Food101', 'ImageNet',
     'ImageNet21k', 'InShop', 'KFoldDataset', 'MNIST', 'MultiLabelDataset',
     'MultiTaskDataset', 'NLVR2', 'OxfordIIITPet', 'Places205', 'SUN397',
-    'StanfordCars', 'VOC', 'build_dataset'
+    'StanfordCars', 'VOC', 'build_dataset', 'LoadMultiChannelImgFromFile',
+    'ResizeMultiChannel', 'BrightnessTransformMultiChannel', 'NormalizeMinMaxChannelwise'
 ]
 
 if WITH_MULTIMODAL:

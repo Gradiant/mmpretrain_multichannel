@@ -6,9 +6,10 @@ import numpy as np
 
 from skimage import io
 
-from ..builder import PIPELINES
-from . import auto_augment
-from mmcv.transforms import Resize, Normalize
+from .builder import PIPELINES
+from .pipelines import auto_augment
+#from mmcv.transforms import Resize, Normalize
+from mmpretrain.datasets.transforms import Resize, Normalize
 
 
 _MAX_LEVEL = 10
