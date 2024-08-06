@@ -24,6 +24,12 @@ from .stanfordcars import StanfordCars
 from .sun397 import SUN397
 from .transforms import *  # noqa: F401,F403
 from .voc import VOC
+from .manage_multichannel_image import (
+    LoadMultiChannelImgFromFile, 
+    ResizeMultiChannel, 
+    BrightnessTransformMultiChannel, 
+    NormalizeMinMaxChannelwise
+)
 
 
 __all__ = [
