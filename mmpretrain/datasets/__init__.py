@@ -30,6 +30,7 @@ from .manage_multichannel_image import (
     BrightnessTransformMultiChannel, 
     NormalizeMinMaxChannelwise
 )
+from .pipelines import *
 
 
 __all__ = [
