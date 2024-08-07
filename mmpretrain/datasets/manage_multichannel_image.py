@@ -7,7 +7,7 @@ import numpy as np
 from skimage import io
 
 from .builder import PIPELINES
-from .pipelines.auto_augment import auto_augment
+from .pipelines.auto_augment import AutoAugment, BrightnessTransform
 from mmpretrain.datasets.transforms import Resize, Normalize
 
 
@@ -175,7 +175,7 @@ class ResizeMultiChannel(Resize):
         results["keep_ratio"] = self.keep_ratio
 
 @PIPELINES.register_module()
-class BrightnessTransformMultiChannel(auto_augment.BrightnessTransform):
+class BrightnessTransformMultiChannel(BrightnessTransform):
     
     def __init__(self, level, prob=0.5, dims=[]):
 
