@@ -1,6 +1,6 @@
 import collections
 
-from mmcv.utils.registry import build_from_cfg
+from mmengine.registry.build_functions import build_from_cfg
 
 from ..builder import PIPELINES
 
