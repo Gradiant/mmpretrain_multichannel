@@ -7,8 +7,7 @@ import numpy as np
 from skimage import io
 
 from .builder import PIPELINES
-from .pipelines import auto_augment
-#from mmcv.transforms import Resize, Normalize
+from .pipelines.auto_augment import auto_augment
 from mmpretrain.datasets.transforms import Resize, Normalize
 
 
