@@ -1,8 +1,8 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import numpy as np
 from mmcv import Config
-from mmdet.apis import inference_detector
-from mmdet.models import build_detector
+from mmcls.apis import inference_model
+from mmcls.models import build_classifier
 
 from mmcls.models import (MobileNetV2, MobileNetV3, RegNet, ResNeSt, ResNet,
                           ResNeXt, SEResNet, SEResNeXt, SwinTransformer,
@@ -108,11 +108,11 @@ def test_mmdet_inference():
         else:
             config.model.neck.in_channels = out_channels
 
-        model = build_detector(config.model)
+        model = build_classifier(config.model)
         assert isinstance(model.backbone, module)
 
         model.cfg = config
 
         model.eval()
-        result = inference_detector(model, img1)
+        result = inference_model(model, img1)
         assert len(result) == config.num_classes
