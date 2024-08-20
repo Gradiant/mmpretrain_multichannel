@@ -14,12 +14,7 @@ from .multi_label import MultiLabelDataset
 from .samplers import DistributedSampler, RepeatAugSampler
 from .stanford_cars import StanfordCars
 from .voc import VOC
-from .manage_multichannel_image import (
-    LoadMultiChannelImgFromFile, 
-    ResizeMultiChannel, 
-    BrightnessTransformMultiChannel, 
-    NormalizeMinMaxChannelwise
-)
+
 
 __all__ = [
     'BaseDataset', 'ImageNet', 'CIFAR10', 'CIFAR100', 'MNIST', 'FashionMNIST',
@@ -27,6 +22,5 @@ __all__ = [
     'DistributedSampler', 'ConcatDataset', 'RepeatDataset',
     'ClassBalancedDataset', 'DATASETS', 'PIPELINES', 'ImageNet21k', 'SAMPLERS',
     'build_sampler', 'RepeatAugSampler', 'KFoldDataset', 'CUB',
-    'CustomDataset', 'StanfordCars', 'LoadMultiChannelImgFromFile',
-    'ResizeMultiChannel', 'BrightnessTransformMultiChannel', 'NormalizeMinMaxChannelwise'
+    'CustomDataset', 'StanfordCars'
 ]

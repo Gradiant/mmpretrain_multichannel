@@ -6,10 +6,10 @@ import numpy as np
 
 from skimage import io
 
-from .builder import PIPELINES
-from .pipelines.auto_augment import Brightness
-from .pipelines.transforms import Resize, Normalize
-from .pipelines.loading import LoadImageFromFile
+from ..builder import PIPELINES
+from .auto_augment import Brightness
+from .transforms import Resize, Normalize
+from .loading import LoadImageFromFile
 
 
 _MAX_LEVEL = 10
