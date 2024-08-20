@@ -95,6 +95,7 @@ mim install mmcv-full
 git clone https://github.com/open-mmlab/mmclassification.git
 cd mmclassification
 pip3 install -e .
+
 ```
 
 Please refer to [install.md](https://mmclassification.readthedocs.io/en/latest/install.html) for more detailed installation and dataset preparation.
