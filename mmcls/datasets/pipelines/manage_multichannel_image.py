@@ -10,6 +10,9 @@ from ..builder import PIPELINES
 from .auto_augment import Brightness
 from .transforms import Resize, Normalize
 from .loading import LoadImageFromFile
+from skimage import io, transform
+
+from . import transforms
 
 
 _MAX_LEVEL = 10
@@ -88,18 +91,16 @@ class LoadMultiChannelImgFromFile(LoadImageFromFile):
         )
         return repr_str
     
-
-
-
-
+         
 @PIPELINES.register_module()
-class ResizeMultiChannel(Resize):
+class ResizeMultiChannel(transforms.Resize):
     def _resize_img(self, results):
 
-        img = results["img"].shape
+        img_shape = results["img"].shape
+        img = transform.resize(results["img"], self.img_scale[0])
 
-        w_scale = img.shape[1]
-        h_scale = img.shape[2]
+        w_scale = img.shape[1] / img_shape[1]
+        h_scale = img.shape[2] / img_shape[2]
 
         scale_factor = np.array([w_scale, h_scale, w_scale, h_scale], dtype=np.float32)
         results["img"] = img
@@ -107,6 +108,7 @@ class ResizeMultiChannel(Resize):
         results["pad_shape"] = img.shape  # in case that there is no padding
         results["scale_factor"] = scale_factor
         results["keep_ratio"] = self.keep_ratio
+
 
 @PIPELINES.register_module()
 class BrightnessTransformMultiChannel(Brightness):
