@@ -687,6 +687,9 @@ class Resize(object):
             "short", "long", "height", "width". Default to "short".
         backend (str): The image resize backend type, accepted values are
             `cv2` and `pillow`. Default: `cv2`.
+        img_scale (tuple or list[tuple]): Images scales for resizing.
+        keep_ratio (bool): Whether to keep the aspect ratio when resizing the
+            image.
     """
 
     def __init__(self,
@@ -694,7 +697,8 @@ class Resize(object):
                  interpolation='bilinear',
                  adaptive_side='short',
                  backend='cv2',
-                 img_scale=None):
+                 img_scale=None,
+                 keep_ratio=True):
         
         if img_scale is None:
             self.img_scale = None
@@ -730,6 +734,7 @@ class Resize(object):
         self.size = size
         self.interpolation = interpolation
         self.backend = backend
+        self.keep_ratio = keep_ratio
 
     def _resize_img(self, results):
         for key in results.get('img_fields', ['img']):
@@ -760,7 +765,7 @@ class Resize(object):
                     width = int(target_size * w / h)
             else:
                 height, width = self.size
-            if not ignore_resize:
+            if not ignore_resize and self.keep_ratio:
                 img = mmcv.imresize(
                     img,
                     size=(width, height),
@@ -769,14 +774,24 @@ class Resize(object):
                     backend=self.backend)
                 results[key] = img
                 results['img_shape'] = img.shape
+                results['keep_ratio'] = self.keep_ratio
 
     def __call__(self, results):
+        """Call function to resize images
+
+        Args:
+            results (dict): Result dict from loading pipeline.
+
+        Returns:
+            dict: Resized results, keep_ratio keys are added into result dict.
+        """
         self._resize_img(results)
         return results
 
     def __repr__(self):
         repr_str = self.__class__.__name__
         repr_str += f'(img_scale={self.img_scale}, '
+        repr_str += f'keep_ratio={self.keep_ratio}, '
         repr_str += f'(size={self.size}, '
         repr_str += f'interpolation={self.interpolation})'
         return repr_str
