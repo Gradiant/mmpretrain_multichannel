@@ -7,12 +7,8 @@ import numpy as np
 from skimage import io
 
 from ..builder import PIPELINES
-from .auto_augment import Brightness
-from .transforms import Resize, Normalize
-from .loading import LoadImageFromFile
 from skimage import io, transform
-
-from . import transforms
+from . import transforms, auto_augment
 
 
 _MAX_LEVEL = 10
@@ -23,7 +19,7 @@ def enhance_level_to_value(level, a=1.8, b=0.1):
 
 
 @PIPELINES.register_module()
-class LoadMultiChannelImgFromFile(LoadImageFromFile):
+class LoadMultiChannelImgFromFile:
     """Load an image from file.
     Required keys are "img_prefix" and "img_info" (a dict that must contain the
     key "filename"). Added or updated keys are "filename", "img", "img_shape",
@@ -111,7 +107,7 @@ class ResizeMultiChannel(transforms.Resize):
 
 
 @PIPELINES.register_module()
-class BrightnessTransformMultiChannel(Brightness):
+class BrightnessTransformMultiChannel(auto_augment.BrightnessTransform):
     
     def __init__(self, level, prob=0.5, dims=[]):
 
@@ -191,7 +187,7 @@ class BrightnessTransformMultiChannel(Brightness):
 
 
 @PIPELINES.register_module()
-class NormalizeMinMaxChannelwise(Normalize):
+class NormalizeMinMaxChannelwise:
     """Normalize the image channelwise.
     """
 

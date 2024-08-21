@@ -15,6 +15,8 @@ from .compose import Compose
 # Default hyperparameters for all Ops
 _HPARAMS_DEFAULT = dict(pad_val=128)
 
+_MAX_LEVEL = 10
+
 
 def random_negative(value, random_negative_prob):
     """Randomly negate value based on random_negative_prob."""
@@ -820,6 +822,54 @@ class Brightness(object):
         repr_str += f'(magnitude={self.magnitude}, '
         repr_str += f'prob={self.prob}, '
         repr_str += f'random_negative_prob={self.random_negative_prob})'
+        return repr_str
+    
+@PIPELINES.register_module()
+class BrightnessTransform:
+    """Apply Brightness transformation to image. The bboxes, masks and
+    segmentations are not modified.
+
+    Args:
+        level (int | float): Should be in range [0,_MAX_LEVEL].
+        prob (float): The probability for performing Brightness transformation.
+    """
+
+    def __init__(self, level, prob=0.5):
+        assert isinstance(level, (int, float)), \
+            'The level must be type int or float.'
+        assert 0 <= level <= _MAX_LEVEL, \
+            'The level should be in range [0,_MAX_LEVEL].'
+        assert 0 <= prob <= 1.0, \
+            'The probability should be in range [0,1].'
+        self.level = level
+        self.prob = prob
+        self.factor = enhance_level_to_value(level)
+
+    def _adjust_brightness_img(self, results, factor=1.0):
+        """Adjust the brightness of image."""
+        for key in results.get('img_fields', ['img']):
+            img = results[key]
+            results[key] = mmcv.adjust_brightness(img,
+                                                  factor).astype(img.dtype)
+
+    def __call__(self, results):
+        """Call function for Brightness transformation.
+
+        Args:
+            results (dict): Results dict from loading pipeline.
+
+        Returns:
+            dict: Results after the transformation.
+        """
+        if np.random.rand() > self.prob:
+            return results
+        self._adjust_brightness_img(results, self.factor)
+        return results
+
+    def __repr__(self):
+        repr_str = self.__class__.__name__
+        repr_str += f'(level={self.level}, '
+        repr_str += f'prob={self.prob})'
         return repr_str
 
 
