@@ -693,7 +693,7 @@ class Resize(object):
     """
 
     def __init__(self,
-                 size,
+                 size=None,
                  interpolation='bilinear',
                  adaptive_side='short',
                  backend='cv2',
@@ -715,6 +715,7 @@ class Resize(object):
 
         self.adaptive_side = adaptive_side
         self.adaptive_resize = False
+        self.size = img_scale
         if isinstance(size, int):
             assert size > 0
             size = (size, size)
